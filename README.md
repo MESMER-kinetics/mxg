@@ -1,12 +1,14 @@
-# [MESMER XML GUI (MXG)](https://github.com/mesmer-kinetics/mxg)
+# [MESMER XML GUI (MXG)](https://github.com/MESMER-kinetics/mxg)
 
 ## Introduction
 
-MESMER XML GUI (MXG) is a Graphical User Interface (GUI) for visualising and generating [Master Equation Solver for Multi Energy-well Reactions (MESMER)](https://github.com/MESMER-kinetics/MESMER-code) [XML](https://en.wikipedia.org/wiki/XML) format data. MXG is been developed independently of other MESMER XML GUI development efforts (e.g. [http://www.mesmergui.cn/](http://www.mesmergui.cn/)). [EPSRC](https://www.ukri.org/councils/epsrc/) funded development from January 2024 to April 2024.
+MESMER XML GUI (MXG) is a Graphical User Interface (GUI) for generating and visualiising [Master Equation Solver for Multi Energy-well Reactions (MESMER)](https://github.com/MESMER-kinetics/MESMER-code) [XML](https://en.wikipedia.org/wiki/XML) format data.
 
-MXG can be used via GitHub Pages and installed onto devices as a Progressive Web Application (PWA). The latest unstable release is served from GitHub Pages from where the respective PWA can be installed:
- - [Latest unstable version](https://mesmer-kinetics.github.io/mxg/dist/main/)
- - [Version 0.15](https://mesmer-kinetics.github.io/mxg/dist/0.15/)
+[EPSRC](https://www.ukri.org/councils/epsrc/) funded MXG development in 2024.
+
+MXG can be used via GitHub Pages and can be installed onto devices as a Progressive Web Application (PWA) that can be used offline. Version 0.16 is served from GitHub Pages from where the respective PWA can be installed:
+ - [Version 0.16](https://MESMER-kinetics.github.io/mxg/dist/0.16/)
+ - [Version 0.15](https://MESMER-kinetics.github.io/mxg/dist/0.15/)
 
 A PWA is a type of application software delivered via the Web and built using common Web technologies including HTML, CSS, JavaScript, and WebAssembly. It should work on any platform with a standards-compliant browser. For more details about what a PWA is please see:
 - [Wikipedia Progressive Web App Article](https://en.wikipedia.org/wiki/Progressive_web_app)
@@ -24,38 +26,36 @@ MXG uses Big.js under an MIT licence to handle decimal numbers. For details of B
 
 
 ## User/Contributor Guide
-MXG is being developed to support research and save MESMER users time in creating MESMER XML and in visualising MESMER data and compiling information into reports and other data sets.
-Any XML that is created should be checked.
-There is currently no undo button.
-Loading a MESMER file will lose any changes not yet saved.
-There is much about MGX that can be improved. Please test and report issues and comment on issues to help guide development.
+- MXG is for preparing MESMER input data, and visualising and reformulating MESMER output data.
+- Please check MESMER input data created by MXG, especially before executing expensive MESMER calculations.
+- MXG has no undo button, so please take care to save your work in MXG periodically. You should be able to reload a saved file.  
+- Please test MXG and report and comment on issues to help develop MXG. To report an issue you will need a GitHub account. [Please follow this link to check for issues and report them.](https://github.com/MESMER-kinetics/mxg/issues)
+- Submitted issues that are feature requests may help form development plans for future major versions.
 
-There is a Developer Guide below with set up instructions. To contribute, please use the following workflow:
+There is a [Developer Guide](#developer-guide) below with set up instructions. To contribute code, please use the following workflow:
 1. Fork the repository.
-2. Create an issue or comment on an issue to let others know you are working on that.
-3. Make changes to your fork.
+2. Create and comment on an issue to let others know you are working on it.
+3. Test changes to your fork.
 4. Submit a pull request linking to the issue.
 
 
-## Development RoadMap
+## Development Plans
 - Version 1.0
-  - Support selection of a molecule property to add (In Version 0.11 only loaded molecule properties can be changed. What is wanted is like what has been implemented for Control CalcMethod).
-  - Support the specification (addition and deletion) of reactions.
-
+  - There is no fixed timeline for completing testing and releasing Version 1.0. Version 0.16 is the latest beta test version.
 
 ## Developer Guide
-- This section contains instructions for setting up a development environment, and compiling and deploying new versions and provides some trouble shooting hints.
-- [Microsoft Visual Studio Code](https://code.visualstudio.com/) is suggested as a development environment, but other development environments are available...
+- This section is a guide to compiling and deploying a new versions of MXG, and provides some trouble shooting hints.
+- [Microsoft Visual Studio Code](https://code.visualstudio.com/) is suggested as a development environment.
+- To make it easier to release new versions and deploy to different places, some key variables are stored in the [.env file](.env). These are used in the configure step to create build files that are duplicate of source files, but with variable values replaced. Take care to edit the source files and not those generated from these. The [configure.js file](configure.js) file shows the source and generated file paths of those files that are configured. 
 
 ### Set Up
 - Install the latest LTS release of [Node](https://nodejs.org/)
-  - Current development is tested with Node 20.11.1
-- Fork/clone this repository.
+  - Current development is tested with Node 22.10.1
+- Fork and clone this repository.
 - cd into the repository
 - Install dependencies:
 `npm install`
-  - Some dependencies depend on other packages and the installation may tak a few minutes.
-    - The install command should install all the dependencies.
+  - This can take a few minutes.
 
 ### Compile
 - To compile (transpile using the installed [typescript Node Package](https://www.npmjs.com/package/typescript)) run:
@@ -67,13 +67,28 @@ There is a Developer Guide below with set up instructions. To contribute, please
 
 ### Launch
 - To launch (using the installed [npx Node Package](https://www.npmjs.com/package/npx)) run:
-`npm run start`
+  `npm run start`
 - A Web server should run on the local host on port 3460:
-[localhost:3460/](http://localhost:3460/)
-- To stop the Web server, kill the running process.
+  [localhost:3460/](http://localhost:3460/)
+
+### To release a new version
+1. Update the version number in [.env](../.env).
+2. Delete the `node_modules` directory.
+3. Re-install dependencies (run `npm install`).
+4. Re-configure (run `npm run configure`).
+5. Re-compile (run `npm run compile`).
+6. Re-build (run `npm run build`).
+7. Re-launch (run `npm run start`).
+8. Test (load a MESMER input file, create a MESMER input file from scratch, load a MESMER output file).
+9. Commit changes.
+10. Create pull request.
+11. Merge pull request.
+12. Check deployment on GitHub Pages.
+13. Check PWA installation.
 
 ### Trouble Shooting Guide
-1. Use the developer console in the Web browser and check for error and warning messages.
-2. If the Service Worker is not registering, try deleting the `.parcel-cache` and launching again.
-3. In some circumstances it may help to delete the `node_modules` directory install the node packages again, the build and launch.
-4. If the issue persists, please look at any open issues and if you find one that is related, please provide further feedback. If there is no open issue that is the same, please report a new issue...
+1. Open the Web browser developer console and check for error and warning messages.
+2. If the Service Worker is not registering, delete the `.parcel-cache` directory, and re-launch using `npm run start`.
+3. Delete the Web browser cache and try again.
+4. Try deleting the `node_modules` directory, re-install dependencies `npm install`, re-build `npm run build`, and re-launch `npm run start`.
+5. If the problem persists, please report it to the community as an issue.

@@ -166,7 +166,7 @@ const xmlDivID: string = addID(s_xml);
 //const welcomeDivID: string = addID(s_welcome);
 
 // For dark/light mode.
-let dark: boolean = false ;
+let dark: boolean = false;
 
 // Numbers
 export const big0: Big = new Big(0);
@@ -379,7 +379,7 @@ let sp_font: string = "2em SensSerif";
  * Once the DOM is loaded, add the menu and collapsed buttons for content
  */
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     // Update the page styles based on the user's preference.
     document.body.className = dark ? 'dark-mode' : 'light-mode';
 

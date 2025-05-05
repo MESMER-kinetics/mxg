@@ -1,8 +1,10 @@
-// The version of the cache.
-const VERSION = "v0.15.0";
+// The service worker:
+// - caches the static resources that the app needs to function
+// - intercepts server requests and responds with cached responses instead of going to the network
+// - deletes old caches on activation
 
 // The name of the cache
-const CACHE_NAME = `mxg-${VERSION}`;
+const CACHE_NAME = `mxg-0.16`;
 
 // The static resources that the app needs to function.
 const APP_STATIC_RESOURCES = [
@@ -13,7 +15,7 @@ const APP_STATIC_RESOURCES = [
     "src/icons/tire.svg",
     "src/icons/wheel.svg",
     "src/index.html",
-    "src/style.css",
+    "src/css/style.css",
     "src/ts/app.js",
     "src/images/UoL_Logo.png",
 ];

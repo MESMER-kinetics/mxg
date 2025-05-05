@@ -1,0 +1,75 @@
+{
+  "name": "mxg",
+  "version": "%VERSION%",
+  "license": "MIT",
+  "description": "MESMER XML GUI.",
+  "keywords": [
+    "reaction",
+    "kinetics",
+    "chemistry"
+  ],
+  "source": "src/index.html",
+  "homepage": "https://%GITHUB_USER%.github.io/mxg/",
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "configure": "node configure.js",
+    "build": "parcel build src/index.html --dist-dir dist/%VERSION%",
+    "start": "npx parcel src/index.html --dist-dir dist/%VERSION% -p 3460"
+    },
+  "targets": {
+    "%VERSION%": {
+      "context": "browser",
+      "includeNodeModules": true,
+      "sourceMap": true,
+      "engines": {
+        "browsers": [
+          "last 2 Chrome versions",
+          "last 2 Firefox versions",
+          "last 2 Safari versions",
+          "last 2 Edge versions"
+        ]
+      },
+      "distDir": "dist/%VERSION%",
+      "publicUrl": "/mxg/dist/%VERSION%"
+    }
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.13.2",
+    "@parcel/transformer-webmanifest": "^2.13.2",
+    "@types/big.js": "^6.2.2",
+    "@types/node": "^22.10.1",
+    "3dmol": "^2.4.2",
+    "big.js": "^6.2.2",
+    "dotenv": "^16.4.7",
+    "parcel": "^2.13.2",
+    "svgo": "^3.3.2",
+    "typescript": "^5.7.2"
+  },
+  "author": {
+    "name": "Struan Robertson",
+    "url": "https://github.com/struanr"
+  },
+  "contributors": [
+    {
+      "name": "Mark Blitz"
+    },
+    {
+      "name": "Paul Seakins"
+    },
+    {
+      "name": "Struan Robertson",
+      "url": "https://github.com/struanr"
+    },
+    {
+      "name": "Robin Shannon",
+      "url": "https://github.com/RobinShannon"
+    },
+    {
+      "name": "Andy Turner",
+      "url": "https://github.com/agdturner"
+    }
+  ],
+  "dependencies": {
+    "@types/three": "^0.170.0"
+  }
+}
