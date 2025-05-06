@@ -2,7 +2,7 @@
 
 ## Introduction
 
-MESMER XML GUI (MXG) is a Graphical User Interface (GUI) for generating and visualiising [Master Equation Solver for Multi Energy-well Reactions (MESMER)](https://github.com/MESMER-kinetics/MESMER-code) [XML](https://en.wikipedia.org/wiki/XML) format data.
+MESMER XML GUI (MXG) is a Graphical User Interface (GUI) for generating and visualising [Master Equation Solver for Multi Energy-well Reactions (MESMER)](https://github.com/MESMER-kinetics/MESMER-code) [XML](https://en.wikipedia.org/wiki/XML) format data.
 
 [EPSRC](https://www.ukri.org/councils/epsrc/) funded MXG development in 2024.
 
