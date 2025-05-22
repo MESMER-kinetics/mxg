@@ -1191,10 +1191,10 @@ export class ScatterPlot {
         let height: number = this.canvas.height;
         let xMin: number = Number.MAX_VALUE;
         let xMax: number = Number.MIN_VALUE;
-        //let yMin: number = Number.MAX_VALUE;
-        //let yMax: number = Number.MIN_VALUE;
-        let yMin: number = 0;
-        let yMax: number = 1;
+        let yMin: number = Number.MAX_VALUE;
+        let yMax: number = Number.MIN_VALUE;
+        // let yMin: number = 0;
+        // let yMax: number = 1;
         let maxRefWidth: number = 0;
         this.data.forEach((ref_pop, x) => {
             let logx = Math.log10(x.toNumber());
@@ -1203,12 +1203,10 @@ export class ScatterPlot {
             ref_pop.forEach((p, ref) => {
                 maxRefWidth = Math.max(maxRefWidth, ctx.measureText(ref).width);
             });
-            /*
             ref_pop.forEach((p, ref) => {
                 yMin = Math.min(yMin, p.toNumber());
                 yMax = Math.max(yMax, p.toNumber());
             });
-            */
         });
 
         // Calculate the width of the largest tick label
@@ -1254,7 +1252,7 @@ export class ScatterPlot {
                 let logx = Math.log10(x.toNumber());
                 let xPixel: number = x0 + ((logx - xMin) * xScale);
                 let pn: number = p.toNumber();
-                if (pn < 1) {
+                // if (pn < 1) {
                     let yPixel: number = y0 + ((pn - yMin) * yScale);
                     if (yPixel > 0) {
                         ctx.beginPath();
@@ -1265,7 +1263,7 @@ export class ScatterPlot {
                         ctx.fillStyle = color;
                         ctx.fill();
                     }
-                }
+                //}
                 i++;
             });
         });

@@ -84,7 +84,7 @@ export function processAnalysis(xml: XMLDocument): HTMLDivElement {
                 //let labelText: string = rl.tagName + " " + i.toString() + " " + mapToString(rle_attributes);
                 let labelText: string = rl.tagName + " " + i.toString() + " T(" + t + "(K)) conc(" + rle_attributes.get("conc") + "(molec/cm3)) bathGas(" + bathGas + ")";
                 // Create a new collapsible div for the RateList.
-                let rleDivID: string = addID(rlDivID, i.toString());
+                let rleDivID: string = addRID(rlDivID, i.toString());
                 let rleDiv: HTMLDivElement = createDiv(rleDivID);
                 rlDiv.appendChild(rleDiv);
                 let rlecDiv: HTMLDivElement = getCollapsibleDiv(rleDivID, rlDiv, null, rleDiv,
@@ -93,7 +93,7 @@ export function processAnalysis(xml: XMLDocument): HTMLDivElement {
                 let values: string[];
                 // "me:firstOrderLoss".
                 // Create a new collapsible div for the FirstOrderLosses.
-                let folDivID: string = addID(rleDivID, FirstOrderLoss.tagName);
+                let folDivID: string = addRID(rleDivID, FirstOrderLoss.tagName);
                 let folDiv: HTMLDivElement = createDiv(folDivID);
                 rleDiv.appendChild(folDiv);
                 let folcDiv: HTMLDivElement = getCollapsibleDiv(folDivID, rleDiv, null, folDiv,
@@ -148,7 +148,7 @@ export function processAnalysis(xml: XMLDocument): HTMLDivElement {
                 addSaveAsCSVButton(() => tableToCSV(folTable), folDiv, folTableDiv, "First Order Losses", level1);
                 // "me:firstOrderRate".
                 // Create a new collapsible div for the FirstOrderRates.
-                let forDivID: string = addID(rleDivID, FirstOrderRate.tagName);
+                let forDivID: string = addRID(rleDivID, FirstOrderRate.tagName);
                 let forDiv: HTMLDivElement = createDiv(forDivID);
                 rleDiv.appendChild(forDiv);
                 let forcDiv: HTMLDivElement = getCollapsibleDiv(forDivID, rleDiv, null, forDiv,
@@ -202,7 +202,7 @@ export function processAnalysis(xml: XMLDocument): HTMLDivElement {
                 addSaveAsCSVButton(() => tableToCSV(forTable), forDiv, forTableDiv, "First Order Rates", level1);
                 // "me:secondOrderRate".
                 // Create a new collapsible div for the SecondOrderRates.
-                let sorDivID: string = addID(rleDivID, SecondOrderRate.tagName);
+                let sorDivID: string = addRID(rleDivID, SecondOrderRate.tagName);
                 let sorDiv: HTMLDivElement = createDiv(sorDivID);
                 rleDiv.appendChild(sorDiv);
                 let sorcDiv: HTMLDivElement = getCollapsibleDiv(sorDivID, rleDiv, null, sorDiv,
@@ -399,37 +399,43 @@ function AverageEnergyEvolution(xml_as: HTMLCollectionOf<Element>, aDivID: strin
             let pDiv: HTMLDivElement = createDiv(plDivID, level1);
             let pcDiv: HTMLDivElement = getCollapsibleDiv(pDivID, plDiv, null, pDiv, labelText, boundary1, level0);
 
-            // "me:population".
-            //let lt_ref_pop : Map<Big, Map<string, Big>> = new Map(); 
-            // // Change to calculate the log of the time when creating the plots.
-            let t_ref_pop: Map<Big, Map<string, Big>> = new Map();
+            // "me:avEnergy".
+            // Change to calculate the log of the time when creating the plots.
+            let t_ref_pop = new Map<Big, Map<string, Big>>();
             let xml_pn: HTMLCollectionOf<Element> = xml_pl[i].getElementsByTagName("me:avEnergy");
             if (xml_pn.length > 0) {
+                // SHR May 2025: The following temporary Map is based on type string because Map.has(key) fails for type Big.
+                let tmp_pop = new Map<string, Map<string, Big>>(); 
                 for (let j: number = 0; j < xml_pn.length; j++) {  // Loop over the  number of species.
                     let pn_attributes: Map<string, string> = getAttributes(xml_pn[j]);
                     let species: string = pn_attributes.get("ref") as string;
                     let xml_pop: HTMLCollectionOf<Element> = xml_pn[j].getElementsByTagName("me:Av");
                     if (xml_pop.length > 0) {
-                        for (let k: number = 0; k < xml_pop.length; k++) { // Loop over the number of times.
+                        for (let k: number = 0; k < xml_pop.length; k++) { // Loop over the number of timesteps.
                             let pop_attributes: Map<string, string> = getAttributes(xml_pop[k]);
+                            let time: string = pop_attributes.get("time") as string ;
                             let t: Big = pop_attributes.get("time") != undefined ? new Big(pop_attributes.get("time") as string) : big0;
                             let energy: string = xml_pop[k].textContent as string;
-                            if (j == 0) {
-                                let ref_pop: Map<string, Big> = new Map();
-                                ref_pop.set(species, Big(energy));
-                                t_ref_pop.set(t, ref_pop);
+                            if (tmp_pop.has(time)) {
+                                tmp_pop.get(time)?.set(species, Big(energy)); 
                             } else {
-                                t_ref_pop.get(t)?.set(species, Big(energy));
+                                let ref_pop = new Map<string, Big.Big>() ;
+                                ref_pop.set(species, Big(energy));
+                                tmp_pop.set(time, ref_pop);
                             }
                         }
                     }
+                }
+                if (tmp_pop.size > 0) {
+                   for (let key of tmp_pop.keys()) 
+                    t_ref_pop.set(Big(key), tmp_pop.get(key) as Map<string, Big.Big>) ;
                 }
             }
             // Create graph.
             createGraph(pDiv, pDivID, t_ref_pop, labelText);
         }
     }
-}
+ }
 
 // Create graph.
 function createGraph(pDiv: HTMLDivElement, pDivID: string, t_ref_pop: Map<Big, Map<string, Big>>, labelText: string): void {
