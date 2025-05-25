@@ -1955,8 +1955,8 @@ export class ThermoValue extends TagWithAttributes {
     /**
      * @returns The temperature.
      */
-    getT(): Big {
-        return new Big(this.attributes.get(ThermoValue.s_T)!);
+    getT(): string {
+        return this.attributes.get(ThermoValue.s_T)!;
     }
 
     /**
@@ -1969,8 +1969,8 @@ export class ThermoValue extends TagWithAttributes {
     /**
      * @returns The enthalpy.
      */
-    getH(): Big {
-        return new Big(this.attributes.get(ThermoValue.s_H)!);
+    getH(): string {
+        return this.attributes.get(ThermoValue.s_H)!;
     }
 
     /**
@@ -1983,8 +1983,8 @@ export class ThermoValue extends TagWithAttributes {
     /**
      * @returns The entropy.
      */
-    getS(): Big {
-        return new Big(this.attributes.get(ThermoValue.s_S)!);
+    getS(): string {
+        return this.attributes.get(ThermoValue.s_S)!;
     }
 
     /**
@@ -1997,8 +1997,8 @@ export class ThermoValue extends TagWithAttributes {
     /**
      * @returns The Gibbs free energy.
      */
-    getG(): Big {
-        return new Big(this.attributes.get(ThermoValue.s_G)!);
+    getG(): string {
+        return this.attributes.get(ThermoValue.s_G)!;
     }
 
     /**
@@ -2011,8 +2011,8 @@ export class ThermoValue extends TagWithAttributes {
     /**
      * @returns The heat capacity.
      */
-    getCp(): Big {
-        return new Big(this.attributes.get(ThermoValue.s_Cp)!);
+    getCp(): string {
+        return this.attributes.get(ThermoValue.s_Cp)!;
     }
 
     /**
@@ -2026,8 +2026,7 @@ export class ThermoValue extends TagWithAttributes {
      * @returns The ThermoValue as a string array.
      */
     toStringArray(): string[] {
-        return [this.getT().toString(), this.getH().toString(), this.getS().toString(), this.getG().toString(),
-        this.getCp().toString()];
+        return [this.getT(), this.getH(), this.getS(), this.getG(), this.getCp()];
     }
 
     /**
