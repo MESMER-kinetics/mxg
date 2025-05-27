@@ -1169,10 +1169,12 @@ export class ScatterPlot {
 
     private canvas: HTMLCanvasElement;
     private data: Map<Big, Map<string, Big>>;
+    private yAxisLabel: string ;
 
-    constructor(canvas: HTMLCanvasElement, data: Map<Big, Map<string, Big>>, font: string) {
+    constructor(canvas: HTMLCanvasElement, data: Map<Big, Map<string, Big>>, font: string, yAxisLabel: string) {
         this.canvas = canvas;
         this.data = data;
+        this.yAxisLabel = yAxisLabel ;
         // Create a new scatter plot.
         this.draw(font);
     }
@@ -1193,8 +1195,6 @@ export class ScatterPlot {
         let xMax: number = Number.MIN_VALUE;
         let yMin: number = Number.MAX_VALUE;
         let yMax: number = Number.MIN_VALUE;
-        // let yMin: number = 0;
-        // let yMax: number = 1;
         let maxRefWidth: number = 0;
         this.data.forEach((ref_pop, x) => {
             let logx = Math.log10(x.toNumber());
@@ -1208,9 +1208,17 @@ export class ScatterPlot {
                 yMax = Math.max(yMax, p.toNumber());
             });
         });
+        yMin = Math.min(yMin, 0.0);
+        // Find the latest power of 10 that is less than Maximum data point.
+        let iDeciFctr: number = 0 ;
+        let tmp: number = yMax ;
+        while (tmp > 10.0){
+            tmp /= 10.0 ;
+            iDeciFctr++ ;
+        }
 
         // Calculate the width of the largest tick label
-        let yTicks: number = 2;
+        let yTicks: number = 11;
         let yTickSpacing: number = 1;
         let maxTickLabelWidth = 0;
         for (let i: number = 0; i < yTicks; i++) {
@@ -1223,7 +1231,7 @@ export class ScatterPlot {
         let th = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
         let xmargin: number = (th * 4);
         // Set the margin based on the width of the largest tick label
-        let ymargin: number = maxTickLabelWidth + th + 20; // Add 20 for some extra space
+        let ymargin: number = maxTickLabelWidth + th * 4; 
         let x0: number = ymargin;
         let y0: number = height - (ymargin + (th * 3));
         let x1: number = width - (xmargin + maxRefWidth + 20);
@@ -1278,7 +1286,9 @@ export class ScatterPlot {
         ctx.rotate(-Math.PI / 2);
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        let yLabel: string = "fractional population";
+        let yLabel: string = this.yAxisLabel ;
+        if (iDeciFctr > 0) 
+            yLabel += ("/1.e" + iDeciFctr.toString()) ;
         ctx.fillText(yLabel, -y0 - (y1 - y0) / 2, x0 - ymargin);
         ctx.restore();
         // Draw x-axis ticks.
@@ -1301,12 +1311,18 @@ export class ScatterPlot {
             ctx.fillText(xTick.toString(), xPixel, y0 + 5);
             xTick += xTickSpacing;
         }
+
         // Draw y-axis ticks.
+        let DeciFctr : number = 10.0**iDeciFctr ;
+        yTickSpacing = (y1-y0)/(yTicks - 1);
+        let diff : number = (yMax - yMin)/(yTicks - 1);
         for (let i: number = 0; i < yTicks; i++) {
-            let yTick: number = y0 - i * yTickSpacing;
+            let yTick: number = y0 + i*yTickSpacing; // Convert yTick to pixel scale;
+            let yValue: string = Number((yMin + i*diff)/DeciFctr).toPrecision(2) ;
             ctx.beginPath();
             ctx.moveTo(x0, yTick);
             ctx.lineTo(x0 - 5, yTick);
+            ctx.fillText(yValue, x0 - 30, yTick - th*0.5);
             ctx.stroke();
         }
         // Add a legend.
