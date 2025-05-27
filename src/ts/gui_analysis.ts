@@ -358,7 +358,7 @@ function PopulationEvolution(xml_as: HTMLCollectionOf<Element>, aDivID: string, 
                 }
             }
             // Create graph.
-            createGraph(pDiv, pDivID, t_ref_pop, labelText);
+            createGraph(pDiv, pDivID, t_ref_pop, labelText, "fractional population");
 
             // Create Table.
             let tableDiv: HTMLDivElement = createDiv(addRID(pDivID, s_table), boundary1);
@@ -432,19 +432,19 @@ function AverageEnergyEvolution(xml_as: HTMLCollectionOf<Element>, aDivID: strin
                 }
             }
             // Create graph.
-            createGraph(pDiv, pDivID, t_ref_pop, labelText);
+            createGraph(pDiv, pDivID, t_ref_pop, labelText, "Average Energy");
         }
     }
  }
 
 // Create graph.
-function createGraph(pDiv: HTMLDivElement, pDivID: string, t_ref_pop: Map<Big, Map<string, Big>>, labelText: string): void {
+function createGraph(pDiv: HTMLDivElement, pDivID: string, t_ref_pop: Map<Big, Map<string, Big>>, labelText: string,  yAxisLabel: string): void {
     let graphDiv: HTMLDivElement = createDiv(addRID(pDivID, s_graph), boundary1);
     pDiv.appendChild(graphDiv);
     let canvas: HTMLCanvasElement = document.createElement('canvas') as HTMLCanvasElement;
     graphDiv.appendChild(canvas);
     // Create a scatter plot.
-    let scatterPlot: ScatterPlot = new ScatterPlot(canvas, t_ref_pop, sp_font);
+    let scatterPlot: ScatterPlot = new ScatterPlot(canvas, t_ref_pop, sp_font, yAxisLabel) ;
     // Add the scatter plot to the collection.
     scatterPlots.push(scatterPlot);
     //scatterPlot.draw();
