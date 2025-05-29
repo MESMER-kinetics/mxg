@@ -1169,12 +1169,12 @@ export class ScatterPlot {
 
     private canvas: HTMLCanvasElement;
     private data: Map<Big, Map<string, Big>>;
-    private yAxisLabel: string ;
+    private graphdetails: GraphDetails ;
 
-    constructor(canvas: HTMLCanvasElement, data: Map<Big, Map<string, Big>>, font: string, yAxisLabel: string) {
+    constructor(canvas: HTMLCanvasElement, data: Map<Big, Map<string, Big>>, font: string, graphdetails: GraphDetails) {
         this.canvas = canvas;
         this.data = data;
-        this.yAxisLabel = yAxisLabel ;
+        this.graphdetails = graphdetails ;
         // Create a new scatter plot.
         this.draw(font);
     }
@@ -1286,9 +1286,10 @@ export class ScatterPlot {
         ctx.rotate(-Math.PI / 2);
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
-        let yLabel: string = this.yAxisLabel ;
-        if (iDeciFctr > 0) 
+        let yLabel: string = this.graphdetails.yAxisLabel ;
+        if (iDeciFctr != 0) 
             yLabel += ("/1.e" + iDeciFctr.toString()) ;
+        yLabel += this.graphdetails.units ;
         ctx.fillText(yLabel, -y0 - (y1 - y0) / 2, x0 - ymargin);
         ctx.restore();
         // Draw x-axis ticks.
@@ -1355,6 +1356,20 @@ export class ScatterPlot {
     }
 }
 
+// 
+// Class for collecting graph details.
+//
+export class GraphDetails {
+    public xAxisLabel: string ;
+    public yAxisLabel: string ;
+    public units: string ;
+
+    constructor() {
+        this.xAxisLabel = "";
+        this.yAxisLabel = "";
+        this.units = "";
+    }
+}
 
 /**
  * Convert an HTMLTableElement to a CSV string.
