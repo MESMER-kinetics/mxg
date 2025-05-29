@@ -3,7 +3,7 @@ import {
     Analysis, Eigenvalue, EigenvalueList, FirstOrderLoss, FirstOrderRate, Pop, Population, PopulationList,
     RateList, SecondOrderRate
 } from "./xml_analysis";
-import { addID, addSaveAsCSVButton, addSaveAsPNGButton, boundary1, addRID, level1, mesmer, level0, big0, s_table, ScatterPlot, tableToCSV } from "./app";
+import { addID, addSaveAsCSVButton, addSaveAsPNGButton, boundary1, addRID, level1, mesmer, level0, big0, s_table, ScatterPlot, GraphDetails, tableToCSV } from "./app";
 import { getAttributes, getFirstChildNode } from "./xml";
 import { createDiv, getCollapsibleDiv, addTableRow, createLabel, createTable, addTableHeaderRow } from "./html";
 import { Description } from './xml_mesmer.js';
@@ -358,7 +358,9 @@ function PopulationEvolution(xml_as: HTMLCollectionOf<Element>, aDivID: string, 
                 }
             }
             // Create graph.
-            createGraph(pDiv, pDivID, t_ref_pop, labelText, "fractional population");
+            let graphdetails: GraphDetails = new GraphDetails() ;
+            graphdetails.yAxisLabel = "fractional population" ;
+            createGraph(pDiv, pDivID, t_ref_pop, labelText, graphdetails);
 
             // Create Table.
             let tableDiv: HTMLDivElement = createDiv(addRID(pDivID, s_table), boundary1);
@@ -387,11 +389,12 @@ function AverageEnergyEvolution(xml_as: HTMLCollectionOf<Element>, aDivID: strin
     let plDiv: HTMLDivElement = createDiv(plDivID, level1);
     let plcDiv: HTMLDivElement = getCollapsibleDiv(plDivID, aDiv, null, plDiv, tagName + "s", boundary1, level1);
     let xml_pl: HTMLCollectionOf<Element> = xml_as[0].getElementsByTagName(tagName);
+    let units: string = "";
     if (xml_pl.length > 0) {
         // Create a new collapsible div for the PopulationList.
         for (let i: number = 0; i < xml_pl.length; i++) {
             let pl_attributes: Map<string, string> = getAttributes(xml_pl[i]);
-
+            units = pl_attributes.get("energyUnits")!;
             let pl: PopulationList = new PopulationList(pl_attributes);
             let labelText: string = tagName + " " + i.toString() + " " + mapToString(pl_attributes);
             let plDivID: string = addRID(aDiv.id, tagName, i.toString());
@@ -432,19 +435,22 @@ function AverageEnergyEvolution(xml_as: HTMLCollectionOf<Element>, aDivID: strin
                 }
             }
             // Create graph.
-            createGraph(pDiv, pDivID, t_ref_pop, labelText, "Average Energy");
+            let graphdetails: GraphDetails = new GraphDetails() ;
+            graphdetails.yAxisLabel = "Average Energy" ;
+            graphdetails.units = units ;
+            createGraph(pDiv, pDivID, t_ref_pop, labelText, graphdetails);
         }
     }
  }
 
 // Create graph.
-function createGraph(pDiv: HTMLDivElement, pDivID: string, t_ref_pop: Map<Big, Map<string, Big>>, labelText: string,  yAxisLabel: string): void {
+function createGraph(pDiv: HTMLDivElement, pDivID: string, t_ref_pop: Map<Big, Map<string, Big>>, labelText: string, graphdetails: GraphDetails): void {
     let graphDiv: HTMLDivElement = createDiv(addRID(pDivID, s_graph), boundary1);
     pDiv.appendChild(graphDiv);
     let canvas: HTMLCanvasElement = document.createElement('canvas') as HTMLCanvasElement;
     graphDiv.appendChild(canvas);
     // Create a scatter plot.
-    let scatterPlot: ScatterPlot = new ScatterPlot(canvas, t_ref_pop, sp_font, yAxisLabel) ;
+    let scatterPlot: ScatterPlot = new ScatterPlot(canvas, t_ref_pop, sp_font, graphdetails) ;
     // Add the scatter plot to the collection.
     scatterPlots.push(scatterPlot);
     //scatterPlot.draw();
