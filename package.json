@@ -15,7 +15,8 @@
     "version:update": "node update-version.js",
     "build": "npm run version:update && parcel build src/index.html --dist-dir dist --public-url /mxg/",
     "start": "npm run version:update && npx parcel src/index.html --dist-dir dist -p 3460 --public-url /mxg/",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "clean": "rm -rf dist .parcel-cache"
   },
   "devDependencies": {
     "@parcel/packager-raw-url": "^2.13.2",
