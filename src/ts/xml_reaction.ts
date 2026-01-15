@@ -712,8 +712,7 @@ export class Kinf extends NodeWithNodes {
         let val: Val = this.getVal()!;
         let rev: Rev = this.getRev()!;
         let keq: Keq = this.getKeq()!;
-        //return [t.getValue().toString(), val.getValue().toString(), rev.getValue().toString(), keq.getValue().toString()];
-        return [t.value.toString(), val.value.toString(), rev.value.toString(), keq.value.toString()];
+        return [t.value.toString(), val.value.toString(), (rev != undefined) ? rev.value.toString() : "undef", (keq != undefined) ?  keq.value.toString() : "undef"];
     }
 
     /**
