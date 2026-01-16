@@ -1,3 +1,10 @@
+/**
+ * Defaults management.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import { mapToString } from "./util";
 import { getAttributes, getSingularElement } from "./xml";
 

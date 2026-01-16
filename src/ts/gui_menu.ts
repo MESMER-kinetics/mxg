@@ -1,3 +1,10 @@
+/**
+ * GUI menu creation.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import { createButton, sy_downTriangle, sy_upTriangle } from "./html.js";
 import { addID, addMolecule, boundary1, defaults, libmols, load, menuDivID, saveXML, setLibmols, startAfresh } from "./app.js";
 import { LibraryMolecules } from './librarymols.js';

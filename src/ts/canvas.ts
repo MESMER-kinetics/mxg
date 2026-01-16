@@ -1,4 +1,12 @@
 /**
+ * Functions for drawing on a canvas.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
+
+/**
  * Draw a horizontal line and add labels.
  * @param ctx The context to use.
  * @param strokeStyle The name of a style to use for the line.

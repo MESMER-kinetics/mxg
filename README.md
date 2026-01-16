@@ -58,11 +58,12 @@ MXG uses Big.js under an MIT licence to handle decimal numbers. For details of B
   - `manifest.webmanifest` is the manifest file for the PWA.
   - `sw.js` contains the code for the [PWA service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API), which is a script that runs in the background of the user's Web browser. It caches assets, enables offline functionality, and handles push notifications.
 
-
-## User/Contributor Guide
+## User Guide
 - MXG is for preparing MESMER input data, and visualising and reformulating MESMER output data.
 - Please check MESMER input data created by MXG, especially before executing expensive MESMER calculations.
-- MXG has no undo button, so please take care to save your work in MXG periodically. You should be able to reload a saved file.  
+- MXG has no undo button, so please take care to save your work in MXG periodically. You should be able to reload a saved file.
+
+## Contributor Guide
 - Please test MXG and report and comment on issues to help develop it. To report an issue you will need a GitHub account. [Please follow this link to check for issues and report them.](https://github.com/MESMER-kinetics/mxg/issues)
 - Submitted issues that are feature requests may help form development plans for future major versions.
 
@@ -75,54 +76,56 @@ There is a [Developer Guide](#developer-guide) below with set up instructions. T
 
 ## Development Plans
 - Version 1.0
-  - There is no fixed timeline for completing testing and releasing Version 1.0. Version 0.17 is the latest beta test version.
+  - There is no fixed timeline for completing testing and releasing Version 1.0.
+  - There should be an automated test to ensure that MXG will:
+    - Load a MESMER input file
+    - Create a MESMER input file from scratch
+    - Load a MESMER output file
+
 
 ## Developer Guide
-- This section is a guide to compiling and deploying a new versions of MXG, and provides some trouble shooting hints.
 - [Microsoft Visual Studio Code](https://code.visualstudio.com/) is suggested as a development environment.
 
-
 ### Set Up
-- Install the latest LTS release of [Node](https://nodejs.org/)
-  - Current development is tested with Node 22.10.1
-- Fork and clone this repository.
-- cd into the repository
+- Install the latest Long Term Support (LTS) release of [Node](https://nodejs.org/)
+- Fork this repository on GitHub.
+- Clone your fork on your local machine.
+- Change into the repository:
+  - `cd mxg`
 - Install dependencies:
-`npm install`
-  - This can take a few minutes.
+  - `npm install`
+  - This will take a few minutes.
 
-### Compile
-- To compile (transpile using the installed [typescript Node Package](https://www.npmjs.com/package/typescript)) run:
-`npm run compile`
+### Compilation
+- Transpile using the installed [typescript Node Package](https://www.npmjs.com/package/typescript):
+  - `npm run compile`
 
 ### Build/Package
-- To build (using the installed [parcel Node Package](https://www.npmjs.com/package/parcel)) run:
-`npm run build`
+- Build using the installed [parcel Node Package](https://www.npmjs.com/package/parcel):
+  - `npm run build`
 
-### Launch
-- To launch (using the installed [npx Node Package](https://www.npmjs.com/package/npx)) run:
-  `npm run start`
-- A Web server should run on the local host on port 3460:
-  [localhost:3460/](http://localhost:3460/)
+### Test Locally
+- Launch using the installed [npx Node Package](https://www.npmjs.com/package/npx):
+  - `npm run start`
+  - A Web server should run on the local host on port 3460:
+    - [localhost:3460/](http://localhost:3460/)
 
-### To release a new version
-1. Delete the `node_modules` directory.
-2. Re-install dependencies (run `npm install`).
-3. Re-compile (run `npm run compile`).
-4. Re-build (run `npm run build`).
-5. Re-launch (run `npm run start`).
-6. Test (load a MESMER input file, create a MESMER input file from scratch, load a MESMER output file).
-7. Commit changes.
-9. Create pull request.
-10. Merge pull request.
-11. Deploy (run `npm run deploy`)
-11. Check deployment on GitHub Pages.
-12. Check PWA installation.
+### Workflow to release a new version
+1. Clean out the old version (run `npm run clean`).
+2. Build (run `npm run build`).
+3. Test (run `npm run start`, and test changes.
+4. Deploy (run `npm run deploy`).
+5. Test the GitHub Pages deployment on your fork.
+4. Ensure your changes are committed and create a pull request on GitHub for both branch you want to commit and the gh-pages branch with the new deployment.
 
 
 ### Trouble Shooting Guide
 1. Open the Web browser developer console and check for error and warning messages.
-2. If the Service Worker is not registering, delete the `.parcel-cache` directory, and re-launch using `npm run start`.
+2. If the Service Worker is not registering clean and rebuild/deploy:
+  - `npm run clean`
+  - `npm run build`
+  - `npm run start`
+  - `npm run deploy`
 3. Delete the Web browser cache and try again.
-4. Try deleting the `node_modules` directory, re-install dependencies `npm install`, re-build `npm run build`, and re-launch `npm run start`.
-5. If the problem persists, please report it as an issue.
+4. Deleting the `node_modules` directory, re-install dependencies `npm install`, re-build `npm run build`, re-launch `npm run start`, re-deploy `npm run deploy`.
+5. If the problem persists, please report/ask for help.

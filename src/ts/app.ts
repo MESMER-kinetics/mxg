@@ -1,3 +1,10 @@
+/**
+ * The main application.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 // Imports from MXG modules.
 import { arrayToString, getID, isNumeric, mapToString } from './util.js';
 import { getFirstChildNode, getAttributes, getSingularElement, NumberNode } from './xml.js';

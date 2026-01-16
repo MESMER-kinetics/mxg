@@ -1,4 +1,10 @@
-
+/**
+ * XML analysis processing.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import { Description } from './xml_mesmer.js';
 import { NodeWithNodes, NumberNode } from './xml.js';
 
