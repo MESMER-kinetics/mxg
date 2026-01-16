@@ -1,3 +1,10 @@
+/**
+ * XML mesmer processing.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import { Analysis } from "./xml_analysis.js";
 import { Conditions } from "./xml_conditions.js";
 import { Control } from "./xml_control.js";

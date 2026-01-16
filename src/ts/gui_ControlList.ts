@@ -1,3 +1,10 @@
+/**
+ * GUI control list processing.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import Big from "big.js";
 import { boundary1, s_container, level1, addRemoveButton, mesmer, remove, s_Add_sy_add, setNumberNode, 
     sy_selected, sy_deselected, s_optionOn, s_optionOff, s_input, s_selectOption, level0, big0, 

@@ -1,5 +1,11 @@
+/**
+ * HTML helper functions.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import { getID } from "./util";
-
 
 export const s_button: string = "button";
 export const s_collapsible: string = "collapsible";

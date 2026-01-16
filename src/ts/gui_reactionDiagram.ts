@@ -1,3 +1,10 @@
+/**
+ * GUI reaction diagram processing.
+ *
+ * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Andy Turner <agdturner@gmail.com>
+ */
 import { addRID, addSaveAsPNGButton, big0, boundary1, getMolecule, level0, level1, reactionsDiagramDivID, remove, s_Reactions_Diagram } from "./app";
 import { getTextHeight, getTextWidth, drawLine, drawLevel } from "./canvas";
 import { s_button, createDiv, createButton, getCollapsibleDiv } from "./html";
