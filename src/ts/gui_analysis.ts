@@ -4,6 +4,7 @@
  * Copyright (c) 2024-now MXG contributors, licensed under MIT, See LICENSE file for more info.
  *
  * @author Andy Turner <agdturner@gmail.com>
+ * @author Struan Robertson <struanhrobertson@gmail.com>
  */
 import Big from "big.js";
 import {
